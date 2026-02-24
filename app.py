@@ -25,7 +25,7 @@ def admin():
 def add_notice():
     title = request.form["title"]
     description = request.form["description"]
-    expiry = request.form["expiry"]
+    expiry = datetime.strptime(request.form["expiry"], "%Y-%m-%d")
 
     notice = {
         "title": title,
@@ -48,13 +48,15 @@ def delete_notice(id):
 
 @app.route("/api/notices")
 def get_notices():
-    today = datetime.now().strftime("%Y-%m-%d")
+    today = datetime.now()
     active_notices = list(collection.find({
         "expiry": {"$gte": today}
     }).sort("created_at", -1))
 
     for notice in active_notices:
         notice["_id"] = str(notice["_id"])
+        notice["expiry"] = notice["expiry"].strftime("%Y-%m-%d")
+        notice["created_at"] = notice["created_at"].strftime("%Y-%m-%d %H:%M")
 
     return jsonify(active_notices)
 
