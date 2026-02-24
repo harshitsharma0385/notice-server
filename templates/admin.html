@@ -1,33 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Notice Admin Panel</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>DICE Notice Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<h2>Add Notice</h2>
+    <!-- NAVBAR -->
+    <div class="navbar">
+    
+    <div class="nav-left">
+        <img src="{{ url_for('static', filename='uniLogo.png') }}" alt="University Logo" class="uniLogo">
+        <div class="divider"></div>
+        <img src="{{ url_for('static', filename='dicelabLogo.png') }}" alt="Lab Logo" class="labLogo">
+    </div>
 
-<form action="/add" method="POST">
-    <input type="text" name="title" placeholder="Title" required><br><br>
-    <textarea name="description" placeholder="Description" required></textarea><br><br>
-    <input type="date" name="expiry" required><br><br>
-    <button type="submit">Post Notice</button>
-</form>
+    <div class="nav-title">
+        DICE Notice Panel
+    </div>
 
-<hr>
+    <div class="nav-right">
+        <span class="admin-badge">Admin</span>
+    </div>
 
-<h2>Existing Notices</h2>
-
-{% for notice in notices %}
-<div>
-    <h3>{{ notice.title }}</h3>
-    <p>{{ notice.description }}</p>
-    <p>Expiry: {{ notice.expiry }}</p>
-    <a href="/delete/{{ notice._id }}">Delete</a>
 </div>
-<hr>
-{% endfor %}
+
+    <!-- MAIN CONTENT -->
+    <div class="page-content">
+        <div class="container">
+
+            <h1>Add New Notice</h1>
+
+            <form action="/add" method="POST">
+                <input type="text" name="title" placeholder="Title" required>
+                <textarea name="description" placeholder="Description" rows="4" required></textarea>
+                <input type="date" name="expiry" required>
+                <button type="submit">Post Notice</button>
+            </form>
+
+            <h2 class="section-title">Existing Notices</h2>
+
+            {% for notice in notices %}
+            <div class="card">
+                <h3>{{ notice.title }}</h3>
+                <p>{{ notice.description }}</p>
+                <div class="expiry">Expiry: {{ notice.expiry }}</div>
+                <a class="delete" href="/delete/{{ notice._id }}">Delete</a>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        © 2026 DICE Lab | Chitkara University | Made by Harshit Sharma
+    </footer>
 
 </body>
 </html>
