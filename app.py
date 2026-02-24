@@ -25,12 +25,12 @@ def admin():
 def add_notice():
     title = request.form["title"]
     description = request.form["description"]
-    expiry = datetime.strptime(request.form["expiry"], "%Y-%m-%d")
+    # expiry = datetime.strptime(request.form["expiry"], "%Y-%m-%d")
 
     notice = {
         "title": title,
         "description": description,
-        "expiry": expiry,
+        # "expiry": expiry,
         "created_at": datetime.now()
     }
 
@@ -60,8 +60,8 @@ def get_notices():
             "created_at": notice["created_at"].strftime("%Y-%m-%d %H:%M")
         }
 
-        if "expiry" in notice:
-            formatted_notice["expiry"] = notice["expiry"].strftime("%Y-%m-%d")
+        # if "expiry" in notice:
+        #     formatted_notice["expiry"] = notice["expiry"].strftime("%Y-%m-%d")
 
         formatted_notices.append(formatted_notice)
 
