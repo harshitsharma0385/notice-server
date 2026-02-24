@@ -48,18 +48,24 @@ def delete_notice(id):
 
 @app.route("/api/notices")
 def get_notices():
-    today = datetime.now().date()
-    active_notices = list(collection.find({
-        "expiry": {"$gte": datetime.combine(today, datetime.min.time())}
-    }).sort("created_at", -1))
+    notices = list(collection.find().sort("created_at", -1))
 
-    for notice in active_notices:
-        notice["_id"] = str(notice["_id"])
-        notice["expiry"] = notice["expiry"].strftime("%Y-%m-%d")
-        notice["created_at"] = notice["created_at"].strftime("%Y-%m-%d %H:%M")
+    formatted_notices = []
 
-    active_notices = list(collection.find().sort("created_at", -1))
-    return jsonify(active_notices)
+    for notice in notices:
+        formatted_notice = {
+            "_id": str(notice["_id"]),
+            "title": notice.get("title", ""),
+            "description": notice.get("description", ""),
+            "created_at": notice["created_at"].strftime("%Y-%m-%d %H:%M")
+        }
+
+        if "expiry" in notice:
+            formatted_notice["expiry"] = notice["expiry"].strftime("%Y-%m-%d")
+
+        formatted_notices.append(formatted_notice)
+
+    return jsonify(formatted_notices)
 
     
 
