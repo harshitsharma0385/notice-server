@@ -41,7 +41,8 @@
             <form action="/add" method="POST">
                 <input type="text" name="title" placeholder="Title" required>
                 <textarea name="description" placeholder="Description" rows="4" required></textarea>
-                <input type="date" name="expiry" required>
+                <label class="input-label">Expiry Date</label>
+                <input type="date" name="expiry" required class="date">
                 <button type="submit">Post Notice</button>
             </form>
 
