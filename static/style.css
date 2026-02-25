@@ -44,6 +44,12 @@ body {
     gap: 15px;
 }
 
+.nav-right{
+    color: black;
+    font-weight: 500;
+    font-size: 40px;
+}
+
 .uniLogo {
     height: 50px;
 }
@@ -72,6 +78,15 @@ body {
     /* border-radius: 20px; */
     font-size: 20px;
     font-weight: 500;
+}
+
+.admin-badge a{
+    text-decoration: none;
+    color: white;
+    border-radius: 20px;
+    background: #111827;
+    padding: 6px 14px;
+    font-size: 20px;
 }
 
 /* PAGE CONTENT */
@@ -222,6 +237,21 @@ button:hover {
     }
     .nav-title{
         font-size: 10px;
+    }
+
+    .nav-right{
+        font-size: 20px;
+    }
+
+    .admin-badge{
+        font-size: 10px;
+    }
+
+    .uniLogo{
+        height: 30px;
+    }
+    .labLogo{
+        height: 60px;
     }
 }
 

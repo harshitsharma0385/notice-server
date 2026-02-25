@@ -20,18 +20,19 @@
     
     <div class="nav-left">
         <img src="{{ url_for('static', filename='uniLogo.png') }}" alt="University Logo" class="uniLogo">
+        <img src="{{ url_for('static', filename='dicelabLogo.png') }}" alt="Lab Logo" class="labLogo">
+
         <!-- <div class="divider"></div> -->
         <!-- <img src="{{ url_for('static', filename='dicelabLogo.png') }}" alt="Lab Logo" class="labLogo"> -->
          
     </div>
-        <span class="admin-badge">Welcome</span>
     <!-- <div class="nav-title">
     </div> -->
 
     <div class="nav-right">
-        <!-- <span class="admin-badge">Admin</span> -->
-        <img src="{{ url_for('static', filename='dicelabLogo.png') }}" alt="Lab Logo" class="labLogo">
+       Notice Board
     </div>
+        <span class="admin-badge"> <a href="/logout">Logout</a></span>
 
 </div>
 
@@ -65,7 +66,7 @@
 
     <!-- FOOTER -->
     <footer class="footer">
-        © 2026 DICE Lab | Chitkara University | Made by Harshit Sharma
+        © 2026 DICE Lab | Chitkara University | Made with ❤️ by Harshit Sharma
     </footer>
 
 </body>
