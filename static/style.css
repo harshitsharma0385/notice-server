@@ -269,4 +269,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-top: 10px;
 }
 
+/* Image Preview */
+.preview-image {
+    display: none;
+    margin-top: 15px;
+    max-width: 250px;
+    border-radius: 12px;
+    border: 1px solid #2a2f3a;
+}
 
+/* Notice Image */
+.notice-image {
+    margin-top: 15px;
+    max-width: 300px;
+    border-radius: 12px;
+    border: 1px solid #2a2f3a;
+}

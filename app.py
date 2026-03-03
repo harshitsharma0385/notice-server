@@ -3,19 +3,29 @@ from flask_cors import CORS
 from pymongo import MongoClient
 from datetime import datetime
 from bson.objectid import ObjectId
+import os
+import cloudinary
+import cloudinary.uploader
+
 
 app = Flask(__name__)
-app.secret_key = "7f93kdl29s0xv92mslq8x7a1z0pwe4rtyu6"
+app.secret_key = os.getenv("SECRET_KEY")
 CORS(app)
 
-
-client = MongoClient("mongodb+srv://harshit3850_db_user:vampiremongo@cluster0.ofot2vd.mongodb.net/?appName=Cluster0")
+client = MongoClient(os.getenv("MONGO_URI"))
 db = client["notice_board"]
 collection = db["notices"]
 
+# Cloudinary Config
+cloudinary.config(
+    cloud_name = os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key = os.getenv("CLOUDINARY_API_KEY"),
+    api_secret = os.getenv("CLOUDINARY_API_SECRET")
+)
+
 # Login Panel
 
-ADMIN_PASSWORD = "dice123"
+ADMIN_PASSWORD =  os.getenv("ADMIN_PASSWORD")
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if(request.method == "POST"):
@@ -57,18 +67,25 @@ def add_notice():
         return redirect(url_for("login"))
     title = request.form["title"]
     description = request.form["description"]
-    # expiry = datetime.strptime(request.form["expiry"], "%Y-%m-%d")
+    image = request.files.get("image")
+    image_url = ""
+
+    #Upload image to cloudinary
+    if image and image.filename != "":
+        upload_result = cloudinary.uploader.upload(image)
+        image_url = upload_result["secure_url"]
 
     notice = {
         "title": title,
         "description": description,
-        # "expiry": expiry,
+        "image_url": image_url,
         "created_at": datetime.now()
     }
 
     collection.insert_one(notice)
     return redirect("/")
 
+    
 # Delete Notice
 
 @app.route("/delete/<id>")
@@ -91,6 +108,7 @@ def get_notices():
             "_id": str(notice["_id"]),
             "title": notice.get("title", ""),
             "description": notice.get("description", ""),
+            "image_url": notice.get("image_url", ""),
             "created_at": notice["created_at"].strftime("%Y-%m-%d %H:%M")
         }
 

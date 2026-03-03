@@ -42,11 +42,11 @@
 
             <h1>Add New Notice</h1>
 
-            <form action="/add" method="POST">
+            <form action="/add" method="POST" enctype="multipart/form-data">
                 <input type="text" name="title" placeholder="Title" required>
                 <textarea name="description" placeholder="Description" rows="4" required></textarea>
-                <!-- <label class="input-label">Expiry Date</label>
-                <input type="date" name="expiry" required class="date"> -->
+                <input type="file" name="image" accept="image/*" onchange="previewImage(event)">
+                <img id = "imagePreview" class="preview-image">
                 <button type="submit">Post Notice</button>
             </form>
 
@@ -56,7 +56,11 @@
             <div class="card">
                 <h3>{{ notice.title }}</h3>
                 <p>{{ notice.description }}</p>
-                <!-- <div class="expiry">Expiry: {{ notice.expiry }}</div> -->
+
+                <% if notice.image_url %>
+                    <img src = "{{ notice.image_url }}" class="notice-image">
+                <% endif %>
+
                 <a class="delete" href="/delete/{{ notice._id }}">Delete</a>
             </div>
             {% endfor %}
@@ -68,6 +72,14 @@
     <footer class="footer">
         © 2026 DICE Lab | Chitkara University | Made with ❤️ by Harshit Sharma
     </footer>
+
+    <script>
+        function previewImage(event){
+            const preview = document.getElementById("imagePreview");
+            preview.src = URL.createdObjectURL(event.target.files[0]);
+            preview.style.display = "block";
+        }
+    </script>   
 
 </body>
 </html>
