@@ -207,6 +207,11 @@ button:hover {
     text-decoration: underline;
 }
 
+.note{
+    font: 12px;
+    color: white;
+}
+
 /* FOOTER */
 .footer {
     background: #0d1117;
