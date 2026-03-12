@@ -60,13 +60,14 @@ def admin():
     return render_template("admin.html", notices=notices)
 
 #Add notice
-
+image_url = ""
+public_id = ""
 @app.route("/add", methods=["POST"])
 def add_notice():
     if not session.get("admin"):
         return redirect(url_for("login"))
-    title = request.form["title"]
-    description = request.form["description"]
+    # title = request.form["title"]
+    # description = request.form["description"]
     image = request.files.get("image")
     image_url = ""
 
@@ -74,11 +75,13 @@ def add_notice():
     if image and image.filename != "":
         upload_result = cloudinary.uploader.upload(image)
         image_url = upload_result["secure_url"]
+        public_id = upload_result["public_id"]
 
     notice = {
-        "title": title,
-        "description": description,
+        # "title": title,
+        # "description": description,
         "image_url": image_url,
+        "public_id": public_id,
         "created_at": datetime.now()
     }
 
@@ -92,7 +95,15 @@ def add_notice():
 def delete_notice(id):
     if not session.get("admin"):
         return redirect(url_for("login"))
+    # collection.delete_one({"_id": ObjectId(id)})
+    # return redirect("/")
+    notice = collection.find_one({"_id": ObjectId(id)})
+
+    if notice and notice.get("public_id"):
+        cloudinary.uploader.destroy(notice["public_id"])
+
     collection.delete_one({"_id": ObjectId(id)})
+
     return redirect("/")
 
 #API for MagicMirror
