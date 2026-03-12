@@ -25,7 +25,7 @@ cloudinary.config(
 
 # Login Panel
 
-ADMIN_PASSWORD =  os.getenv("ADMIN_PASSWORD")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if(request.method == "POST"):
@@ -106,8 +106,8 @@ def get_notices():
     for notice in notices:
         formatted_notice = {
             "_id": str(notice["_id"]),
-            "title": notice.get("title", ""),
-            "description": notice.get("description", ""),
+            # "title": notice.get("title", ""),
+            # "description": notice.get("description", ""),
             "image_url": notice.get("image_url", ""),
             "created_at": notice["created_at"].strftime("%Y-%m-%d %H:%M")
         }
