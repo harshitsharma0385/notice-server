@@ -217,6 +217,13 @@ button:hover {
     color: #8b949e;
 }
 
+.delete{
+    background-color: red;
+    color: white;
+    border-radius: 20%;
+    padding: 10px;
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
 
@@ -240,7 +247,7 @@ button:hover {
     }
 
     .nav-right{
-        font-size: 20px;
+        visibility: hidden;
     }
 
     .admin-badge{
