@@ -43,11 +43,13 @@
         --hint-border:     #c3d4f8;
         --card-footer-bg:  #f4f6fb;
         --notice-shadow:   0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
-        --logo-filter:     none;
-
         --toggle-bg:       #e2e8f0;
         --toggle-knob:     #ffffff;
         --toggle-icon:     #f59e0b;
+
+        --logo-bg:         transparent;
+        --logo-border:     transparent;
+        --logo-divider-color: var(--border);
     }
 
     /* ── Dark theme ───────────────────────────────────────────────────────── */
@@ -82,11 +84,13 @@
         --hint-border:     rgba(96,165,250,0.18);
         --card-footer-bg:  #263047;
         --notice-shadow:   0 2px 12px rgba(0,0,0,0.35);
-        --logo-filter:     none;
-
         --toggle-bg:       #334155;
         --toggle-knob:     #0f172a;
         --toggle-icon:     #94a3b8;
+
+        --logo-bg:         #ffffff;
+        --logo-border:     rgba(255,255,255,0.15);
+        --logo-divider-color: #cbd5e1;
     }
 
     /* ── Reset ────────────────────────────────────────────────────────────── */
@@ -130,14 +134,19 @@
         transition: background .3s ease, border-color .3s ease;
     }
 
-    .nav-left { display: flex; align-items: center; gap: 14px; }
-    .logo-box { height: 38px; display: flex; align-items: center; }
-    .logo-box img {
-        height: 100%; width: auto; object-fit: contain;
-        filter: var(--logo-filter);
-        transition: filter .3s ease;
+    .nav-left { display: flex; align-items: center; }
+    .logos-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--logo-bg);
+        border: 1px solid var(--logo-border);
+        border-radius: 8px;
+        padding: 5px 14px;
+        transition: background .3s ease, border-color .3s ease;
     }
-    .logo-divider { width: 1px; height: 22px; background: var(--border); }
+    .logo-img { height: 32px; width: auto; object-fit: contain; display: block; }
+    .logo-divider { width: 1px; height: 22px; background: var(--logo-divider-color); transition: background .3s ease; }
 
     .nav-center {
         position: absolute;
@@ -481,12 +490,10 @@
 <!-- ── Navbar ─────────────────────────────────────────────────────────────── -->
 <nav class="navbar">
     <div class="nav-left">
-        <div class="logo-box">
-            <img src="{{ url_for('static', filename='uniLogo.png') }}" alt="University Logo">
-        </div>
-        <div class="logo-divider"></div>
-        <div class="logo-box">
-            <img src="{{ url_for('static', filename='dicelabLogo.png') }}" alt="DICE Lab Logo">
+        <div class="logos-wrap">
+            <img src="{{ url_for('static', filename='uniLogo.png') }}" alt="University Logo" class="logo-img">
+            <div class="logo-divider"></div>
+            <img src="{{ url_for('static', filename='dicelabLogo.png') }}" alt="DICE Lab Logo" class="logo-img">
         </div>
     </div>
 
