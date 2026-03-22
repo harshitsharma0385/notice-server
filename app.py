@@ -120,7 +120,8 @@ def get_notices():
             # "title": notice.get("title", ""),
             # "description": notice.get("description", ""),
             "image_url": notice.get("image_url", ""),
-            "created_at": notice["created_at"].strftime("%Y-%m-%d %H:%M")
+            "created_at": notice["created_at"].strftime("%Y-%m-%d %H:%M"),
+            "timestamp": notice["created_at"].timestamp() if notice.get("created_at") else 0 
         }
 
         # if "expiry" in notice:
