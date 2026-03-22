@@ -7,333 +7,387 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
     <style>
-    /* ── Tokens ───────────────────────────────────────────────────────────── */
     :root {
-        --bg:          #080c12;
-        --surface:     #0e1520;
-        --surface-2:   #131d2b;
-        --border:      rgba(255,255,255,0.07);
-        --border-hover:rgba(255,255,255,0.14);
-        --text:        #e8edf5;
-        --muted:       #5a6880;
-        --accent:      #3b82f6;
-        --accent-glow: rgba(59,130,246,0.18);
-        --green:       #22c55e;
-        --green-glow:  rgba(34,197,94,0.2);
-        --serif:       'Playfair Display', Georgia, serif;
-        --sans:        'Outfit', sans-serif;
-        --ease:        cubic-bezier(.4,0,.2,1);
+        --bg:           #f7f8fa;
+        --white:        #ffffff;
+        --border:       #e4e7ec;
+        --border-dark:  #c9cdd6;
+        --text:         #0f1117;
+        --text-mid:     #4b5262;
+        --text-faint:   #9aa0ae;
+        --accent:       #1a56db;
+        --accent-light: #eff4ff;
+        --accent-border:#c3d4f8;
+        --danger-bg:    #fff5f5;
+        --danger-text:  #c01c1c;
+        --danger-border:#f5c0c0;
+        --sans:         'Inter', sans-serif;
+        --serif:        'DM Serif Display', Georgia, serif;
+        --ease:         cubic-bezier(.22,1,.36,1);
+        --radius:       10px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html, body {
-        height: 100%;
-        -webkit-font-smoothing: antialiased;
-    }
+    html, body { height: 100%; -webkit-font-smoothing: antialiased; }
 
     body {
         font-family: var(--sans);
         background: var(--bg);
         color: var(--text);
+        min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 100vh;
         padding: 24px;
     }
 
-    /* ── Background ───────────────────────────────────────────────────────── */
-    body::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background:
-            radial-gradient(ellipse 70% 60% at 20% 15%, rgba(59,130,246,0.07) 0%, transparent 65%),
-            radial-gradient(ellipse 50% 50% at 80% 85%, rgba(34,197,94,0.04) 0%, transparent 65%);
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    /* Subtle grid texture */
-    body::after {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background-image:
-            linear-gradient(rgba(255,255,255,0.013) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.013) 1px, transparent 1px);
-        background-size: 48px 48px;
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    /* ── Card ─────────────────────────────────────────────────────────────── */
-    .login-wrapper {
-        position: relative;
-        z-index: 1;
+    /* ── Outer wrapper ────────────────────────────────────────────────────── */
+    .page-wrap {
         width: 100%;
-        max-width: 400px;
-        animation: fadeUp .55s var(--ease) both;
-    }
-
-    .login-card {
-        background: var(--surface);
+        max-width: 900px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background: var(--white);
         border: 1px solid var(--border);
         border-radius: 18px;
-        padding: 44px 40px 36px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.06);
+        animation: fadeUp .5s var(--ease) both;
+    }
+
+    /* ── Left — branding ──────────────────────────────────────────────────── */
+    .brand-panel {
+        background: #0f172a;
+        padding: 52px 48px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         position: relative;
         overflow: hidden;
     }
 
-    /* Top accent line */
-    .login-card::before {
+    /* Geometric accent shape */
+    .brand-panel::before {
         content: '';
         position: absolute;
-        top: 0; left: 0; right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
-        opacity: 0.6;
+        bottom: -60px;
+        right: -60px;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        border: 40px solid rgba(255,255,255,0.04);
+        pointer-events: none;
+    }
+    .brand-panel::after {
+        content: '';
+        position: absolute;
+        bottom: -120px;
+        right: -120px;
+        width: 380px;
+        height: 380px;
+        border-radius: 50%;
+        border: 40px solid rgba(255,255,255,0.025);
+        pointer-events: none;
     }
 
-    /* ── Header ───────────────────────────────────────────────────────────── */
-    .login-eyebrow {
-        font-size: 10px;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 12px;
+    .brand-top { position: relative; z-index: 1; }
+
+    .brand-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 20px;
+        padding: 5px 12px 5px 8px;
+        margin-bottom: 40px;
+    }
+    .brand-badge-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: #4ade80;
+    }
+    .brand-badge-text {
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: rgba(255,255,255,0.6);
+    }
+
+    .brand-title {
+        font-family: var(--serif);
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 1.15;
+        color: #ffffff;
+        letter-spacing: -0.02em;
+        margin-bottom: 16px;
+    }
+    .brand-title span { color: rgba(255,255,255,0.35); font-style: italic; }
+
+    .brand-desc {
+        font-size: 13px;
+        line-height: 1.8;
+        color: rgba(255,255,255,0.38);
+        font-weight: 300;
+        max-width: 240px;
+    }
+
+    .brand-bottom {
+        position: relative;
+        z-index: 1;
+    }
+    .brand-divider {
+        height: 1px;
+        background: rgba(255,255,255,0.08);
+        margin-bottom: 20px;
+    }
+    .brand-footer {
+        font-size: 11px;
+        color: rgba(255,255,255,0.25);
+        letter-spacing: 0.04em;
+        line-height: 1.8;
+    }
+
+    /* ── Right — form ─────────────────────────────────────────────────────── */
+    .form-panel {
+        padding: 52px 48px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .form-header { margin-bottom: 36px; }
+
+    .form-label-row {
         display: flex;
         align-items: center;
         gap: 8px;
+        margin-bottom: 10px;
     }
-    .login-eyebrow::before {
-        content: '';
-        display: inline-block;
-        width: 20px; height: 1px;
-        background: var(--accent);
-    }
-
-    .login-title {
-        font-family: var(--serif);
-        font-size: 30px;
-        font-weight: 400;
-        letter-spacing: -0.01em;
-        line-height: 1.2;
-        color: var(--text);
-        margin-bottom: 6px;
-    }
-    .login-title em {
-        font-style: italic;
-        color: rgba(232,237,245,0.45);
-    }
-
-    .login-subtitle {
-        font-size: 13px;
-        color: var(--muted);
-        margin-bottom: 36px;
-        font-weight: 300;
-    }
-
-    /* ── Icon lock ────────────────────────────────────────────────────────── */
-    .lock-icon {
-        width: 48px; height: 48px;
-        background: var(--surface-2);
-        border: 1px solid var(--border);
-        border-radius: 12px;
+    .form-label-icon {
+        width: 28px; height: 28px;
+        border-radius: 7px;
+        background: var(--accent-light);
+        border: 1px solid var(--accent-border);
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 28px;
+        color: var(--accent);
+    }
+    .form-eyebrow {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
         color: var(--accent);
     }
 
-    /* ── Form ─────────────────────────────────────────────────────────────── */
+    .form-title {
+        font-family: var(--serif);
+        font-size: 32px;
+        font-weight: 400;
+        color: var(--text);
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        margin-bottom: 6px;
+    }
+    .form-subtitle {
+        font-size: 13px;
+        color: var(--text-faint);
+        font-weight: 400;
+    }
+
+    /* Error */
+    .error-msg {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 11px 14px;
+        background: var(--danger-bg);
+        border: 1px solid var(--danger-border);
+        border-radius: 8px;
+        font-size: 13px;
+        color: var(--danger-text);
+        margin-bottom: 20px;
+    }
+
+    /* Field */
+    .field-group { margin-bottom: 20px; }
+
     .field-label {
         display: block;
-        font-size: 10px;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin-bottom: 8px;
+        font-size: 13px;
         font-weight: 500;
+        color: var(--text-mid);
+        margin-bottom: 7px;
     }
 
-    .input-wrap {
-        position: relative;
-        margin-bottom: 24px;
-    }
-    .input-wrap svg {
-        position: absolute;
-        left: 14px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--muted);
-        pointer-events: none;
-        transition: color .2s var(--ease);
-    }
+    .input-shell { position: relative; }
 
-    input[type="password"] {
+    input[type="password"],
+    input[type="text"] {
         width: 100%;
-        background: var(--surface-2);
+        background: var(--white);
         border: 1px solid var(--border);
-        border-radius: 10px;
+        border-radius: var(--radius);
         color: var(--text);
         font-family: var(--sans);
         font-size: 14px;
         font-weight: 400;
-        padding: 13px 44px 13px 42px;
+        padding: 11px 42px 11px 14px;
         outline: none;
-        transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+        transition: border-color .15s, box-shadow .15s;
         -webkit-appearance: none;
-        letter-spacing: 0.06em;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
-    input[type="password"]::placeholder {
-        color: var(--muted);
-        letter-spacing: 0.02em;
-    }
-    input[type="password"]:focus {
+    input::placeholder { color: var(--text-faint); }
+    input:hover { border-color: var(--border-dark); }
+    input:focus {
         border-color: var(--accent);
-        box-shadow: 0 0 0 3px var(--accent-glow);
-    }
-    input[type="password"]:focus + svg,
-    .input-wrap:focus-within svg {
-        color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(26,86,219,0.12);
     }
 
-    /* Toggle visibility button */
     .toggle-vis {
         position: absolute;
-        right: 12px;
+        right: 11px;
         top: 50%;
         transform: translateY(-50%);
         background: none;
         border: none;
-        color: var(--muted);
+        color: var(--text-faint);
         cursor: pointer;
         padding: 4px;
         display: flex;
         align-items: center;
-        transition: color .2s var(--ease);
+        transition: color .15s;
         width: auto;
         box-shadow: none;
     }
-    .toggle-vis:hover {
-        color: var(--text);
-        transform: translateY(-50%);
-        box-shadow: none;
-    }
+    .toggle-vis:hover { color: var(--text-mid); transform: translateY(-50%); box-shadow: none; }
 
-    /* ── Submit ───────────────────────────────────────────────────────────── */
+    /* Submit */
     .submit-btn {
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
-        padding: 14px;
-        background: linear-gradient(135deg, #16a34a, #22c55e);
+        gap: 8px;
+        padding: 12px 20px;
+        background: var(--accent);
         border: none;
-        border-radius: 10px;
+        border-radius: var(--radius);
         color: #fff;
         font-family: var(--sans);
         font-size: 14px;
         font-weight: 600;
-        letter-spacing: 0.04em;
         cursor: pointer;
-        transition: opacity .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
-        box-shadow: 0 4px 20px var(--green-glow);
-        margin-top: 4px;
+        letter-spacing: 0.01em;
+        transition: background .15s, transform .15s, box-shadow .15s;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1), 0 4px 16px rgba(26,86,219,0.25);
+        margin-top: 8px;
     }
     .submit-btn:hover {
-        opacity: .9;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 28px var(--green-glow);
+        background: #1648c0;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 8px 24px rgba(26,86,219,0.3);
     }
-    .submit-btn:active {
-        transform: translateY(0);
-    }
+    .submit-btn:active { transform: translateY(0); }
 
-    /* ── Divider ──────────────────────────────────────────────────────────── */
-    .card-divider {
-        height: 1px;
-        background: var(--border);
-        margin: 28px 0 20px;
-    }
-
-    /* ── Footer ───────────────────────────────────────────────────────────── */
-    .login-footer {
+    /* Footer */
+    .form-footer {
+        margin-top: 28px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
         text-align: center;
-        font-size: 11px;
-        color: var(--muted);
-        letter-spacing: 0.04em;
-        line-height: 1.8;
-    }
-    .login-footer strong {
-        color: rgba(232,237,245,0.35);
-        font-weight: 500;
+        font-size: 12px;
+        color: var(--text-faint);
     }
 
-    /* ── Flash / error message ────────────────────────────────────────────── */
-    .error-msg {
-        background: rgba(239,68,68,0.1);
-        border: 1px solid rgba(239,68,68,0.25);
-        border-radius: 8px;
-        padding: 10px 14px;
-        font-size: 12.5px;
-        color: #f87171;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    /* ── Animation ────────────────────────────────────────────────────────── */
     @keyframes fadeUp {
         from { opacity: 0; transform: translateY(20px); }
         to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+        .page-wrap { grid-template-columns: 1fr; }
+        .brand-panel { display: none; }
+        .form-panel { padding: 40px 32px; }
     }
     </style>
 </head>
 <body>
 
-<div class="login-wrapper">
-    <div class="login-card">
+<div class="page-wrap">
 
-        <div class="lock-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-            </svg>
+    <!-- Brand -->
+    <div class="brand-panel">
+        <div class="brand-top">
+            <div class="brand-badge">
+                <div class="brand-badge-dot"></div>
+                <span class="brand-badge-text">DICE Lab · Chitkara University</span>
+            </div>
+            <h1 class="brand-title">
+                Digital<br>Notice<br><span>Board</span>
+            </h1>
+            <p class="brand-desc">
+                Manage and publish notices across the institute's display network.
+            </p>
+        </div>
+        <div class="brand-bottom">
+            <div class="brand-divider"></div>
+            <p class="brand-footer">
+                © 2026 DICE Lab<br>
+                Chitkara University
+            </p>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="form-panel">
+        <div class="form-header">
+            <div class="form-label-row">
+                <div class="form-label-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                </div>
+                <span class="form-eyebrow">Admin Portal</span>
+            </div>
+            <h2 class="form-title">Welcome back</h2>
+            <p class="form-subtitle">Sign in to manage your notice board</p>
         </div>
 
-        <div class="login-eyebrow">Secure Access</div>
-        <h1 class="login-title">Admin <em>Login</em></h1>
-        <p class="login-subtitle">DICE Lab · Notice Board Management</p>
-
-        <!-- Uncomment to show error: -->
-        <!-- <div class="error-msg">
+        <!-- Uncomment for error:
+        <div class="error-msg">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             Incorrect password. Please try again.
-        </div> -->
+        </div>
+        -->
 
         <form method="POST">
-            <label class="field-label" for="password">Password</label>
-            <div class="input-wrap">
-                <input type="password" name="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
-                <button type="button" class="toggle-vis" onclick="togglePassword()" aria-label="Toggle visibility" id="toggleBtn">
-                    <svg id="eyeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                        <circle cx="12" cy="12" r="3"/>
-                    </svg>
-                </button>
+            <div class="field-group">
+                <label class="field-label" for="password">Password</label>
+                <div class="input-shell">
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        required
+                        autocomplete="current-password"
+                    >
+                    <button type="button" class="toggle-vis" onclick="togglePassword()" aria-label="Toggle visibility">
+                        <svg id="eyeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <button type="submit" class="submit-btn">
@@ -342,17 +396,15 @@
                     <polyline points="10 17 15 12 10 7"/>
                     <line x1="15" y1="12" x2="3" y2="12"/>
                 </svg>
-                Sign In
+                Sign in
             </button>
         </form>
 
-        <div class="card-divider"></div>
-
-        <div class="login-footer">
-            © 2026 <strong>DICE Lab</strong> · Chitkara University
+        <div class="form-footer">
+            © 2026 DICE Lab · Chitkara University
         </div>
-
     </div>
+
 </div>
 
 <script>
@@ -364,8 +416,7 @@ function togglePassword() {
     icon.innerHTML = isHidden
         ? `<line x1="1" y1="1" x2="23" y2="23"/>
            <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 7 11 7a13.16 13.16 0 0 1-1.67 2.68"/>
-           <path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 7 11 7a9.74 9.74 0 0 0 5.39-1.61"/>
-           <line x1="1" y1="1" x2="23" y2="23"/>`
+           <path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 7 11 7a9.74 9.74 0 0 0 5.39-1.61"/>`
         : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
            <circle cx="12" cy="12" r="3"/>`;
 }

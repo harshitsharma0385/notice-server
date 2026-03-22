@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <title>DICE Notice Board</title>
@@ -7,29 +7,86 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
     <style>
-    /* ── Tokens ───────────────────────────────────────────────────────────── */
-    :root {
-        --bg:          #080c12;
-        --surface:     #0e1520;
-        --surface-2:   #131d2b;
-        --border:      rgba(255,255,255,0.07);
-        --border-hover:rgba(255,255,255,0.14);
-        --text:        #e8edf5;
-        --muted:       #5a6880;
-        --accent:      #3b82f6;
-        --accent-glow: rgba(59,130,246,0.18);
-        --danger:      #ef4444;
-        --danger-glow: rgba(239,68,68,0.18);
-        --green:       #22c55e;
-        --green-glow:  rgba(34,197,94,0.2);
-        --serif:       'Playfair Display', Georgia, serif;
-        --sans:        'Outfit', sans-serif;
-        --nav-h:       72px;
-        --radius:      14px;
-        --ease:        cubic-bezier(.4,0,.2,1);
+    /* ── Light theme (default) ────────────────────────────────────────────── */
+    :root,
+    [data-theme="light"] {
+        --bg:              #eef1f7;
+        --white:           #ffffff;
+        --surface:         #f4f6fb;
+        --border:          #dde2ed;
+        --border-mid:      #c8cfdf;
+
+        --text:            #111827;
+        --text-mid:        #4b5675;
+        --text-faint:      #9aa3ba;
+
+        --accent:          #3b6ff0;
+        --accent-dim:      rgba(59,111,240,0.1);
+        --accent-border:   rgba(59,111,240,0.25);
+
+        --green:           #16a34a;
+        --green-dark:      #15803d;
+
+        --danger:          #b91c1c;
+        --danger-bg:       #fef2f2;
+        --danger-border:   #fecaca;
+
+        --navbar-bg:       #ffffff;
+        --card-bg:         #ffffff;
+        --footer-bg:       #ffffff;
+        --drop-zone-bg:    #f4f6fb;
+        --drop-zone-hover: #f0f5ff;
+        --hint-bg:         #eff4ff;
+        --hint-border:     #c3d4f8;
+        --card-footer-bg:  #f4f6fb;
+        --notice-shadow:   0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04);
+        --logo-filter:     none;
+
+        --toggle-bg:       #e2e8f0;
+        --toggle-knob:     #ffffff;
+        --toggle-icon:     #f59e0b;
+    }
+
+    /* ── Dark theme ───────────────────────────────────────────────────────── */
+    [data-theme="dark"] {
+        --bg:              #0f172a;
+        --white:           #1e293b;
+        --surface:         #263047;
+        --border:          rgba(255,255,255,0.08);
+        --border-mid:      rgba(255,255,255,0.13);
+
+        --text:            #eef0f6;
+        --text-mid:        #94a3b8;
+        --text-faint:      #475569;
+
+        --accent:          #60a5fa;
+        --accent-dim:      rgba(96,165,250,0.12);
+        --accent-border:   rgba(96,165,250,0.28);
+
+        --green:           #22c55e;
+        --green-dark:      #16a34a;
+
+        --danger:          #f87171;
+        --danger-bg:       rgba(248,113,113,0.1);
+        --danger-border:   rgba(248,113,113,0.28);
+
+        --navbar-bg:       #1e293b;
+        --card-bg:         #1e293b;
+        --footer-bg:       #1e293b;
+        --drop-zone-bg:    #263047;
+        --drop-zone-hover: rgba(96,165,250,0.07);
+        --hint-bg:         rgba(96,165,250,0.07);
+        --hint-border:     rgba(96,165,250,0.18);
+        --card-footer-bg:  #263047;
+        --notice-shadow:   0 2px 12px rgba(0,0,0,0.35);
+        --logo-filter:     brightness(0) invert(1);
+
+        --toggle-bg:       #334155;
+        --toggle-knob:     #0f172a;
+        --toggle-icon:     #94a3b8;
     }
 
     /* ── Reset ────────────────────────────────────────────────────────────── */
@@ -37,24 +94,22 @@
     html { scroll-behavior: smooth; }
 
     body {
-        font-family: var(--sans);
+        font-family: 'Inter', sans-serif;
         background: var(--bg);
         color: var(--text);
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        padding-top: var(--nav-h);
+        padding-top: 68px;
         -webkit-font-smoothing: antialiased;
+        transition: background .3s ease, color .3s ease;
     }
 
-    /* ── Background mesh ──────────────────────────────────────────────────── */
     body::before {
         content: '';
         position: fixed;
         inset: 0;
-        background:
-            radial-gradient(ellipse 60% 50% at 15% 10%, rgba(59,130,246,0.06) 0%, transparent 70%),
-            radial-gradient(ellipse 50% 60% at 85% 80%, rgba(34,197,94,0.04) 0%, transparent 70%);
+        background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(59,111,240,0.05) 0%, transparent 65%);
         pointer-events: none;
         z-index: 0;
     }
@@ -63,42 +118,26 @@
     .navbar {
         position: fixed;
         top: 0; left: 0; right: 0;
-        height: var(--nav-h);
-        background: rgba(8,12,18,0.85);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
+        height: 68px;
+        background: var(--navbar-bg);
         border-bottom: 1px solid var(--border);
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0 48px;
         z-index: 1000;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        transition: background .3s ease, border-color .3s ease;
     }
 
-    .nav-left {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-    }
-
-    /* Logo placeholder boxes (replace with actual <img> tags) */
-    .logo-box {
-        height: 40px;
-        display: flex;
-        align-items: center;
-    }
+    .nav-left { display: flex; align-items: center; gap: 14px; }
+    .logo-box { height: 38px; display: flex; align-items: center; }
     .logo-box img {
-        height: 100%;
-        width: auto;
-        object-fit: contain;
-        filter: brightness(0) invert(1);
-        opacity: 0.85;
+        height: 100%; width: auto; object-fit: contain;
+        filter: var(--logo-filter);
+        transition: filter .3s ease;
     }
-    .logo-divider {
-        width: 1px;
-        height: 24px;
-        background: var(--border);
-    }
+    .logo-divider { width: 1px; height: 22px; background: var(--border); }
 
     .nav-center {
         position: absolute;
@@ -106,388 +145,335 @@
         transform: translateX(-50%);
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
     }
     .nav-center-dot {
         width: 6px; height: 6px;
         border-radius: 50%;
         background: var(--accent);
-        box-shadow: 0 0 8px var(--accent);
     }
     .nav-center-title {
-        font-family: var(--serif);
-        font-size: 18px;
-        letter-spacing: 0.01em;
+        font-family: 'DM Serif Display', Georgia, serif;
+        font-size: 17px;
         color: var(--text);
         font-weight: 400;
+        letter-spacing: -0.01em;
     }
 
-    .nav-right {
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+
+    /* ── Theme toggle ─────────────────────────────────────────────────────── */
+    .theme-toggle {
         display: flex;
         align-items: center;
-        gap: 16px;
+        gap: 7px;
+        cursor: pointer;
+        user-select: none;
     }
+    .toggle-track {
+        width: 40px; height: 22px;
+        background: var(--toggle-bg);
+        border-radius: 11px;
+        position: relative;
+        transition: background .3s ease;
+        border: 1px solid var(--border-mid);
+        flex-shrink: 0;
+    }
+    .toggle-knob {
+        width: 16px; height: 16px;
+        background: var(--toggle-knob);
+        border-radius: 50%;
+        position: absolute;
+        top: 2px; left: 2px;
+        transition: transform .25s cubic-bezier(.22,1,.36,1), background .3s ease;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    [data-theme="dark"] .toggle-knob { transform: translateX(18px); }
+
+    .toggle-icon-sun, .toggle-icon-moon {
+        position: absolute;
+        transition: opacity .2s ease;
+        line-height: 1;
+        font-size: 10px;
+    }
+    .toggle-icon-sun  { left: 6px;  top: 50%; transform: translateY(-50%); }
+    .toggle-icon-moon { right: 6px; top: 50%; transform: translateY(-50%); }
+    [data-theme="light"] .toggle-icon-moon { opacity: 0.3; }
+    [data-theme="dark"]  .toggle-icon-sun  { opacity: 0.3; }
 
     .logout-btn {
         display: flex;
         align-items: center;
-        gap: 8px;
-        padding: 8px 18px;
+        gap: 7px;
+        padding: 7px 16px;
         background: transparent;
         border: 1px solid var(--border);
         border-radius: 8px;
-        color: var(--muted);
-        font-family: var(--sans);
+        color: var(--text-mid);
+        font-family: 'Inter', sans-serif;
         font-size: 13px;
         font-weight: 500;
         cursor: pointer;
         text-decoration: none;
-        transition: border-color .2s var(--ease), color .2s var(--ease), background .2s var(--ease);
-        letter-spacing: 0.02em;
+        transition: border-color .15s, color .15s, background .15s;
     }
     .logout-btn:hover {
-        border-color: var(--danger);
+        border-color: var(--danger-border);
         color: var(--danger);
-        background: var(--danger-glow);
+        background: var(--danger-bg);
     }
-    .logout-btn svg { flex-shrink: 0; }
 
-    /* ── Page shell ───────────────────────────────────────────────────────── */
+    /* ── Page content ─────────────────────────────────────────────────────── */
     .page-content {
         flex: 1;
         position: relative;
         z-index: 1;
-        padding: 52px 24px 80px;
-        animation: fadeUp .55s var(--ease) both;
+        padding: 48px 24px 80px;
+        animation: fadeUp .45s cubic-bezier(.22,1,.36,1) both;
     }
-
-    .container {
-        max-width: 860px;
-        margin: 0 auto;
-    }
+    .container { max-width: 840px; margin: 0 auto; }
 
     /* ── Page header ──────────────────────────────────────────────────────── */
-    .page-header {
-        margin-bottom: 44px;
-    }
+    .page-header { margin-bottom: 36px; }
     .page-header-eyebrow {
-        font-size: 11px;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 10px;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 7px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
     }
-    .page-header-eyebrow::before {
-        content: '';
-        display: inline-block;
-        width: 24px; height: 1px;
-        background: var(--accent);
+    .page-header-eyebrow-icon {
+        width: 20px; height: 20px;
+        background: var(--accent-dim);
+        border: 1px solid var(--accent-border);
+        border-radius: 5px;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--accent);
     }
     .page-header h1 {
-        font-family: var(--serif);
-        font-size: clamp(28px, 4vw, 42px);
+        font-family: 'DM Serif Display', Georgia, serif;
+        font-size: clamp(26px, 4vw, 38px);
         font-weight: 400;
         line-height: 1.2;
-        letter-spacing: -0.01em;
+        letter-spacing: -0.02em;
         color: var(--text);
     }
-    .page-header h1 em {
-        font-style: italic;
-        color: rgba(232,237,245,0.55);
-    }
+    .page-header h1 em { font-style: italic; color: var(--text-faint); }
 
     /* ── Upload card ──────────────────────────────────────────────────────── */
     .upload-card {
-        background: var(--surface);
+        background: var(--card-bg);
         border: 1px solid var(--border);
-        border-radius: var(--radius);
-        padding: 36px;
-        margin-bottom: 52px;
+        border-radius: 12px;
+        padding: 32px;
+        margin-bottom: 44px;
+        box-shadow: var(--notice-shadow);
         position: relative;
         overflow: hidden;
-        transition: border-color .3s var(--ease);
+        transition: background .3s ease, border-color .3s ease;
     }
     .upload-card::before {
         content: '';
         position: absolute;
-        top: 0; left: 0; right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, var(--accent), transparent);
-        opacity: 0.5;
+        top: 0; left: 0;
+        width: 3px; height: 100%;
+        background: var(--accent);
+        border-radius: 2px 0 0 2px;
     }
 
-    .upload-card-title {
-        font-size: 11px;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin-bottom: 24px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+    .upload-card-header {
+        display: flex; align-items: center; gap: 8px;
+        margin-bottom: 20px; padding-left: 12px;
     }
-    .upload-card-title svg { color: var(--accent); flex-shrink: 0; }
+    .upload-card-title { font-size: 13px; font-weight: 600; color: var(--text); }
+    .upload-card-title-icon { color: var(--accent); display: flex; }
 
     .hint-text {
-        font-size: 12px;
-        color: var(--muted);
-        margin-bottom: 28px;
+        font-size: 12.5px;
+        color: var(--text-mid);
+        margin-bottom: 24px;
         padding: 10px 14px;
-        background: rgba(59,130,246,0.06);
-        border: 1px solid rgba(59,130,246,0.12);
+        background: var(--hint-bg);
+        border: 1px solid var(--hint-border);
         border-radius: 8px;
         line-height: 1.6;
+        margin-left: 12px;
+        transition: background .3s ease;
     }
-    .hint-text strong { color: rgba(232,237,245,0.7); font-weight: 500; }
+    .hint-text strong { color: var(--text); font-weight: 500; }
 
-    /* Drop zone */
     .drop-zone {
-        border: 2px dashed var(--border);
-        border-radius: 12px;
-        padding: 48px 24px;
+        border: 2px dashed var(--border-mid);
+        border-radius: 10px;
+        padding: 44px 24px;
         text-align: center;
         cursor: pointer;
-        transition: border-color .25s var(--ease), background .25s var(--ease);
+        transition: border-color .2s, background .2s;
         position: relative;
-        margin-bottom: 28px;
+        margin-bottom: 24px;
+        margin-left: 12px;
+        background: var(--drop-zone-bg);
     }
     .drop-zone:hover, .drop-zone.dragover {
         border-color: var(--accent);
-        background: var(--accent-glow);
+        background: var(--drop-zone-hover);
     }
     .drop-zone input[type="file"] {
-        position: absolute;
-        inset: 0;
-        opacity: 0;
-        cursor: pointer;
-        width: 100%;
-        height: 100%;
+        position: absolute; inset: 0; opacity: 0;
+        cursor: pointer; width: 100%; height: 100%;
     }
     .drop-zone-icon {
-        width: 48px; height: 48px;
-        margin: 0 auto 16px;
-        background: var(--surface-2);
+        width: 44px; height: 44px;
+        margin: 0 auto 14px;
+        background: var(--card-bg);
         border: 1px solid var(--border);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
         color: var(--accent);
-        transition: transform .25s var(--ease);
+        transition: transform .2s, background .3s ease;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
-    .drop-zone:hover .drop-zone-icon { transform: scale(1.08); }
-    .drop-zone-label {
-        font-size: 15px;
-        color: var(--text);
-        font-weight: 400;
-        margin-bottom: 6px;
-    }
-    .drop-zone-sub {
-        font-size: 12px;
-        color: var(--muted);
-    }
+    .drop-zone:hover .drop-zone-icon { transform: scale(1.06); }
+    .drop-zone-label { font-size: 14px; color: var(--text); font-weight: 400; margin-bottom: 4px; }
+    .drop-zone-label span { color: var(--accent); font-weight: 500; }
+    .drop-zone-sub { font-size: 12px; color: var(--text-faint); }
 
-    /* Image preview */
     #imagePreview {
         display: none;
-        width: 100%;
-        max-height: 280px;
-        object-fit: cover;
-        border-radius: 10px;
-        border: 1px solid var(--border);
-        margin-bottom: 28px;
-        animation: fadeUp .3s var(--ease);
+        width: 100%; max-height: 260px; object-fit: cover;
+        border-radius: 8px; border: 1px solid var(--border);
+        margin-bottom: 24px; margin-left: 12px;
+        animation: fadeUp .3s ease;
     }
 
-    /* Submit button */
     .submit-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        padding: 13px 28px;
-        background: linear-gradient(135deg, #16a34a, #22c55e);
-        border: none;
-        border-radius: 10px;
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 11px 24px;
+        background: var(--green);
+        border: none; border-radius: 8px;
         color: #fff;
-        font-family: var(--sans);
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        letter-spacing: 0.02em;
-        transition: opacity .2s var(--ease), transform .2s var(--ease), box-shadow .2s var(--ease);
-        box-shadow: 0 4px 20px var(--green-glow);
+        font-family: 'Inter', sans-serif;
+        font-size: 13px; font-weight: 600;
+        cursor: pointer; letter-spacing: 0.01em;
+        transition: background .15s, transform .15s, box-shadow .15s;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 4px 14px rgba(22,163,74,0.28);
+        margin-left: 12px;
     }
     .submit-btn:hover {
-        opacity: .9;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 28px var(--green-glow);
+        background: var(--green-dark);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1), 0 6px 20px rgba(22,163,74,0.32);
     }
-    .submit-btn svg { flex-shrink: 0; }
 
-    /* ── Section heading ──────────────────────────────────────────────────── */
-    .section-header {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        margin-bottom: 24px;
-    }
+    /* ── Section header ───────────────────────────────────────────────────── */
+    .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
     .section-header h2 {
-        font-family: var(--serif);
-        font-size: 22px;
-        font-weight: 400;
-        color: var(--text);
-        white-space: nowrap;
+        font-family: 'DM Serif Display', Georgia, serif;
+        font-size: 20px; font-weight: 400; color: var(--text);
+        white-space: nowrap; letter-spacing: -0.01em;
     }
-    .section-rule {
-        flex: 1;
-        height: 1px;
-        background: var(--border);
-    }
+    .section-header h2 em { font-style: italic; color: var(--text-faint); }
+    .section-rule { flex: 1; height: 1px; background: var(--border); }
     .section-count {
-        font-size: 11px;
-        letter-spacing: 0.1em;
-        color: var(--muted);
-        text-transform: uppercase;
-        white-space: nowrap;
+        font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+        color: var(--text-faint); text-transform: uppercase; white-space: nowrap;
+        background: var(--surface); border: 1px solid var(--border);
+        border-radius: 20px; padding: 3px 10px;
+        transition: background .3s ease;
     }
 
     /* ── Notice cards ─────────────────────────────────────────────────────── */
-    .notices-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
+    .notices-grid { display: flex; flex-direction: column; gap: 16px; }
 
     .notice-card {
-        background: var(--surface);
+        background: var(--card-bg);
         border: 1px solid var(--border);
-        border-radius: var(--radius);
-        overflow: hidden;
-        transition: border-color .25s var(--ease), transform .25s var(--ease);
-        animation: fadeUp .4s var(--ease) both;
+        border-radius: 12px; overflow: hidden;
+        box-shadow: var(--notice-shadow);
+        transition: border-color .2s, transform .2s, box-shadow .2s, background .3s ease;
+        animation: fadeUp .35s cubic-bezier(.22,1,.36,1) both;
     }
     .notice-card:hover {
-        border-color: var(--border-hover);
+        border-color: var(--border-mid);
         transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     }
 
-    .notice-card-img-wrap {
-        position: relative;
-        width: 100%;
-        background: var(--surface-2);
-    }
-    .notice-card-img-wrap img {
-        width: 100%;
-        max-height: 360px;
-        object-fit: cover;
-        display: block;
-    }
+    .notice-card-img-wrap { width: 100%; background: var(--surface); transition: background .3s ease; }
+    .notice-card-img-wrap img { width: 100%; max-height: 360px; object-fit: cover; display: block; }
     .notice-card-img-placeholder {
-        height: 120px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--muted);
-        font-size: 13px;
-        gap: 8px;
+        height: 110px; display: flex; align-items: center;
+        justify-content: center; color: var(--text-faint); font-size: 13px; gap: 7px;
     }
 
     .notice-card-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 14px 20px;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 12px 18px;
         border-top: 1px solid var(--border);
+        background: var(--card-footer-bg);
+        transition: background .3s ease;
     }
     .notice-card-meta {
-        font-size: 12px;
-        color: var(--muted);
-        display: flex;
-        align-items: center;
-        gap: 6px;
+        font-size: 12px; color: var(--text-faint);
+        display: flex; align-items: center; gap: 6px; font-weight: 500;
     }
-    .notice-card-meta svg { flex-shrink: 0; }
 
     .delete-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 7px 16px;
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 6px 14px;
         background: transparent;
-        border: 1px solid rgba(239,68,68,0.25);
-        border-radius: 8px;
-        color: var(--danger);
-        font-family: var(--sans);
-        font-size: 12px;
-        font-weight: 500;
-        cursor: pointer;
-        text-decoration: none;
-        transition: background .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease);
-        letter-spacing: 0.02em;
+        border: 1px solid var(--danger-border);
+        border-radius: 7px; color: var(--danger);
+        font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+        cursor: pointer; text-decoration: none;
+        transition: background .15s, border-color .15s, transform .15s;
     }
-    .delete-btn:hover {
-        background: var(--danger-glow);
-        border-color: var(--danger);
-        transform: translateY(-1px);
-    }
+    .delete-btn:hover { background: var(--danger-bg); transform: translateY(-1px); }
 
     /* ── Empty state ──────────────────────────────────────────────────────── */
     .empty-state {
-        text-align: center;
-        padding: 60px 24px;
-        border: 1px dashed var(--border);
-        border-radius: var(--radius);
+        text-align: center; padding: 56px 24px;
+        border: 2px dashed var(--border); border-radius: 12px;
+        background: var(--card-bg); transition: background .3s ease;
     }
     .empty-state-icon {
-        width: 56px; height: 56px;
-        background: var(--surface-2);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 16px;
-        color: var(--muted);
+        width: 52px; height: 52px;
+        background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 14px; color: var(--text-faint);
     }
-    .empty-state p {
-        color: var(--muted);
-        font-size: 14px;
-    }
+    .empty-state p { color: var(--text-faint); font-size: 13.5px; line-height: 1.6; }
 
     /* ── Footer ───────────────────────────────────────────────────────────── */
     footer {
-        position: relative;
-        z-index: 1;
+        position: relative; z-index: 1;
         border-top: 1px solid var(--border);
-        text-align: center;
-        padding: 22px 24px;
-        font-size: 12px;
-        color: var(--muted);
-        letter-spacing: 0.02em;
+        background: var(--footer-bg);
+        text-align: center; padding: 20px 24px;
+        font-size: 12px; color: var(--text-faint); letter-spacing: 0.02em;
+        transition: background .3s ease, border-color .3s ease;
     }
-    footer strong { color: rgba(232,237,245,0.4); font-weight: 500; }
+    footer strong { color: var(--text-mid); font-weight: 500; }
 
-    /* ── Animations ───────────────────────────────────────────────────────── */
     @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(16px); }
+        from { opacity: 0; transform: translateY(14px); }
         to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Responsive ───────────────────────────────────────────────────────── */
     @media (max-width: 640px) {
         .navbar { padding: 0 20px; }
         .nav-center-title { font-size: 14px; }
-        .upload-card { padding: 24px; }
+        .upload-card { padding: 24px 20px; }
         .page-content { padding: 36px 16px 60px; }
-        .notice-card-img-wrap img { max-height: 220px; }
     }
-    @media (max-width: 400px) {
-        .nav-center { display: none; }
-        .logo-box img { height: 32px; }
-    }
+    @media (max-width: 420px) { .nav-center { display: none; } }
     </style>
 </head>
 <body>
@@ -510,8 +496,18 @@
     </div>
 
     <div class="nav-right">
+
+        <!-- Theme toggle -->
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" role="button" aria-label="Toggle dark/light theme">
+            <div class="toggle-track">
+                <span class="toggle-icon-sun">☀️</span>
+                <span class="toggle-icon-moon">🌙</span>
+                <div class="toggle-knob"></div>
+            </div>
+        </div>
+
         <a href="/logout" class="logout-btn">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
                 <polyline points="16 17 21 12 16 7"/>
                 <line x1="21" y1="12" x2="9" y2="12"/>
@@ -525,20 +521,29 @@
 <div class="page-content">
     <div class="container">
 
-        <!-- Page header -->
         <div class="page-header">
-            <div class="page-header-eyebrow">Admin Panel</div>
+            <div class="page-header-eyebrow">
+                <div class="page-header-eyebrow-icon">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2"/>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                </div>
+                Admin Panel
+            </div>
             <h1>Post a New <em>Notice</em></h1>
         </div>
 
-        <!-- Upload card -->
         <div class="upload-card">
-            <div class="upload-card-title">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
-                    <polyline points="21 15 16 10 5 21"/>
-                </svg>
-                Upload Notice Image
+            <div class="upload-card-header">
+                <div class="upload-card-title-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                </div>
+                <span class="upload-card-title">Upload Notice Image</span>
             </div>
 
             <div class="hint-text">
@@ -546,34 +551,31 @@
             </div>
 
             <form action="/add" method="POST" enctype="multipart/form-data">
-
                 <div class="drop-zone" id="dropZone">
                     <input type="file" name="image" accept="image/*" onchange="previewImage(event)" id="fileInput">
                     <div class="drop-zone-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 16 12 12 8 16"/>
+                            <line x1="12" y1="12" x2="12" y2="21"/>
                             <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
                         </svg>
                     </div>
-                    <div class="drop-zone-label">Drop image here or <span style="color:var(--accent)">browse</span></div>
+                    <div class="drop-zone-label">Drop image here or <span>browse</span></div>
                     <div class="drop-zone-sub">PNG, JPG, WEBP up to 20 MB</div>
                 </div>
-
                 <img id="imagePreview" alt="Preview">
-
                 <button type="submit" class="submit-btn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"/>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
                     </svg>
                     Post Notice
                 </button>
-
             </form>
         </div>
 
-        <!-- Existing notices -->
         <div class="section-header">
-            <h2>Existing <em style="font-style:italic;color:rgba(232,237,245,0.5)">Notices</em></h2>
+            <h2>Existing <em>Notices</em></h2>
             <div class="section-rule"></div>
             <span class="section-count">{{ notices | length }} posted</span>
         </div>
@@ -581,13 +583,13 @@
         {% if notices %}
         <div class="notices-grid">
             {% for notice in notices %}
-            <div class="notice-card" style="animation-delay: {{ loop.index0 * 0.08 }}s">
+            <div class="notice-card" style="animation-delay: {{ loop.index0 * 0.07 }}s">
                 <div class="notice-card-img-wrap">
                     {% if notice.image_url %}
                         <img src="{{ notice.image_url }}" alt="Notice image" loading="lazy">
                     {% else %}
                         <div class="notice-card-img-placeholder">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="3" width="18" height="18" rx="2"/>
                                 <circle cx="8.5" cy="8.5" r="1.5"/>
                                 <polyline points="21 15 16 10 5 21"/>
@@ -598,16 +600,20 @@
                 </div>
                 <div class="notice-card-footer">
                     <span class="notice-card-meta">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
                         </svg>
                         Notice #{{ loop.index }}
                     </span>
-                    <a class="delete-btn" href="/delete/{{ notice._id }}"
-                       onclick="return confirm('Delete this notice?')">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
-                            <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+                    <a class="delete-btn" href="/delete/{{ notice._id }}" onclick="return confirm('Delete this notice?')">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"/>
+                            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                            <path d="M10 11v6"/><path d="M14 11v6"/>
+                            <path d="M9 6V4h6v2"/>
                         </svg>
                         Delete
                     </a>
@@ -619,38 +625,50 @@
         {% else %}
         <div class="empty-state">
             <div class="empty-state-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="3" width="18" height="18" rx="2"/>
                     <circle cx="8.5" cy="8.5" r="1.5"/>
                     <polyline points="21 15 16 10 5 21"/>
                 </svg>
             </div>
-            <p>No notices posted yet. Upload one above.</p>
+            <p>No notices posted yet.<br>Upload one above.</p>
         </div>
         {% endif %}
 
     </div>
 </div>
 
-<!-- ── Footer ──────────────────────────────────────────────────────────────── -->
 <footer>
     © 2026 <strong>DICE Lab</strong> · Chitkara University · Made with ❤️ by Harshit Sharma
 </footer>
 
 <script>
+// ── Theme toggle ──────────────────────────────────────────────────────────────
+function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('dice-theme', next);
+}
+
+// Apply saved theme before paint
+(function() {
+    const saved = localStorage.getItem('dice-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+})();
+
+// ── Image preview ─────────────────────────────────────────────────────────────
 function previewImage(event) {
     const preview = document.getElementById('imagePreview');
     const file = event.target.files[0];
     if (!file) return;
     preview.src = URL.createObjectURL(file);
     preview.style.display = 'block';
-
-    // Update drop zone label
-    const label = document.querySelector('.drop-zone-label');
-    label.innerHTML = `<span style="color:var(--accent)">${file.name}</span>`;
+    document.querySelector('.drop-zone-label').innerHTML = `<span>${file.name}</span>`;
 }
 
-// Drag-over visual
+// ── Drag & drop ───────────────────────────────────────────────────────────────
 const dz = document.getElementById('dropZone');
 dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
 dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
