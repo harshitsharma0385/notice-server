@@ -73,7 +73,13 @@ def add_notice():
 
     #Upload image to cloudinary
     if image and image.filename != "":
-        upload_result = cloudinary.uploader.upload(image)
+        upload_result = cloudinary.uploader.upload(
+            image,
+            transformation=[
+                {"width": 1600, "height": 900, "crop": "fill", "gravity": "auto"},
+                {"quality": "auto"},
+                {"fetch_format": "auto"}
+            ])
         image_url = upload_result["secure_url"]
         public_id = upload_result["public_id"]
 
